@@ -1,7 +1,8 @@
 import pickle
 import numpy as np
+import os
 
-MODEL_PATH = "ml/ransomware_model.pkl"
+MODEL_PATH = os.path.join(os.path.dirname(_file_), "ransomware_model.pkl")
 
 with open(MODEL_PATH, "rb") as f:
     model = pickle.load(f)
