@@ -5,7 +5,8 @@ from utils.alert_store import add_alert
 from utils.logger import log_event
 from utils.killswitch import is_killswitch_active, activate_killswitch
 
-WATCH_FOLDER = r"C:\Users\rakes\simulation\demo_test_files"
+BASE_DIR = os.path.dirname(os.path.dirname(_file_))  # ransomware_backend
+WATCH_FOLDER = os.path.abspath(os.path.join(BASE_DIR, "..", "simulation", "demo_test_files"))
 
 _running = False
 
