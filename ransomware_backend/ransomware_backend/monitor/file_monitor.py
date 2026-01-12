@@ -5,7 +5,7 @@ from utils.alert_store import add_alert
 from utils.logger import log_event
 from utils.killswitch import is_killswitch_active, activate_killswitch
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(_file_))))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 WATCH_FOLDER = os.path.join(BASE_DIR, "simulation", "demo_test_files")
 
 _running = False
