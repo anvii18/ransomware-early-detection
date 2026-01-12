@@ -4,6 +4,9 @@ from api.routes import api_bp
 from utils.logger import setup_logger
 from honeypots.honeypot_manager import deploy_honeypots
 
+import warnings
+warnings.filterwarnings("ignore")
+
 def create_app():
     app = Flask(__name__)
     CORS(app)
