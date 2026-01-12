@@ -57,5 +57,4 @@ def test(files_per_sec, rename_count, entropy_change, honeypot):
 
 # ---------------- SAMPLE TESTS ----------------
 # test(5, 1, 0.10, 0)         # Safe
-#test(25, 7, 0.45, 0)        # Suspicious / usually safe
-test(140, 70, 0.95, 1)      # Ransomware high risk
+#test(25, 7, 0.45, 0)        # Suspicious / usually safe   # Ransomware high risk
