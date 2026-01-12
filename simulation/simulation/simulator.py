@@ -4,8 +4,8 @@ import random
 import string
 from datetime import datetime
 
-# ⚠️ SAFE DEMO FOLDER (only this folder will be modified)
-TARGET_FOLDER = r"C:\Users\rakes\simulation\demo_test_files"
+BASE_DIR = os.path.dirname(_file_)  # simulation folder
+TARGET_FOLDER = os.path.join(BASE_DIR, "demo_test_files")
 
 
 LOG_FILE = "simulator.log"
