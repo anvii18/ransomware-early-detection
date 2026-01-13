@@ -17,22 +17,19 @@ export function Dashboard() {
   useEffect(() => {
     if (!autoMode) return;
 
-    let timeoutId: NodeJS.Timeout;
+    let timeoutId: number;
 
     if (riskLevel === 'normal') {
-      // Stay normal for 3 seconds
-      timeoutId = setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         setRiskLevel('warning');
       }, 3000);
     } else if (riskLevel === 'warning') {
-      // Stay warning for 7 seconds
-      timeoutId = setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         setRiskLevel('critical');
         setShowKillSwitch(true);
       }, 7000);
     } else if (riskLevel === 'critical') {
-      // Stay critical for minimum 6 seconds
-      timeoutId = setTimeout(() => {
+      timeoutId = window.setTimeout(() => {
         setRiskLevel('normal');
         setIsProtected(true);
         setShowKillSwitch(false);
@@ -55,9 +52,7 @@ export function Dashboard() {
     setShowKillSwitch(false);
   };
 
-  const stopAutoDemo = () => {
-    setAutoMode(false);
-  };
+  const stopAutoDemo = () => setAutoMode(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
@@ -76,7 +71,7 @@ export function Dashboard() {
                 Easily protect your device from ransomware threats
               </p>
               <RiskStateIndicator level={riskLevel} />
-              
+
               {/* Protected State Banner */}
               {isProtected && riskLevel === 'normal' && (
                 <div className="mt-4 bg-cyan-500/10 border border-cyan-500/30 rounded-lg p-3 inline-flex items-center gap-3">
@@ -110,53 +105,30 @@ export function Dashboard() {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
               <span className="text-sm text-slate-400">Demo Controls:</span>
-              <button
-                onClick={() => {
-                  setRiskLevel('normal');
-                  setIsProtected(false);
-                  setShowKillSwitch(false);
-                  setAutoMode(false);
-                }}
-                className={`px-4 py-2 rounded-md text-sm transition-colors ${
-                  riskLevel === 'normal' && !autoMode
-                    ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >
-                Normal State
-              </button>
-              <button
-                onClick={() => {
-                  setRiskLevel('warning');
-                  setIsProtected(false);
-                  setShowKillSwitch(false);
-                  setAutoMode(false);
-                }}
-                className={`px-4 py-2 rounded-md text-sm transition-colors ${
-                  riskLevel === 'warning' && !autoMode
-                    ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >
-                Warning State
-              </button>
-              <button
-                onClick={() => {
-                  setRiskLevel('critical');
-                  setShowKillSwitch(true);
-                  setIsProtected(false);
-                  setAutoMode(false);
-                }}
-                className={`px-4 py-2 rounded-md text-sm transition-colors ${
-                  riskLevel === 'critical' && !autoMode
-                    ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                    : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
-                }`}
-              >
-                Critical State
-              </button>
+              {(['normal', 'warning', 'critical'] as RiskLevel[]).map((level) => (
+                <button
+                  key={level}
+                  onClick={() => {
+                    setRiskLevel(level);
+                    setIsProtected(level === 'normal' ? false : isProtected);
+                    setShowKillSwitch(level === 'critical');
+                    setAutoMode(false);
+                  }}
+                  className={`px-4 py-2 rounded-md text-sm transition-colors ${
+                    riskLevel === level && !autoMode
+                      ? level === 'normal'
+                        ? 'bg-green-500/20 text-green-400 border border-green-500/30'
+                        : level === 'warning'
+                        ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30'
+                        : 'bg-red-500/20 text-red-400 border border-red-500/30'
+                      : 'bg-slate-800 text-slate-400 hover:bg-slate-700'
+                  }`}
+                >
+                  {level.charAt(0).toUpperCase() + level.slice(1)} State
+                </button>
+              ))}
             </div>
-            
+
             <button
               onClick={autoMode ? stopAutoDemo : startAutoDemo}
               className={`px-6 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -191,6 +163,22 @@ export function Dashboard() {
           {/* Left Column - Device Status */}
           <div className="lg:col-span-1">
             <DeviceStatus riskLevel={riskLevel} isProtected={isProtected} />
+
+            {/* Stats Cards */}
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+                <div className="text-sm text-slate-400 mb-1">Threats Blocked</div>
+                <div className="text-2xl font-semibold text-white">
+                  {riskLevel === 'critical' ? '47' : riskLevel === 'warning' ? '2' : '0'}
+                </div>
+              </div>
+              <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
+                <div className="text-sm text-slate-400 mb-1">Response Time</div>
+                <div className="text-2xl font-semibold text-white">
+                  {riskLevel === 'critical' ? '0.3s' : riskLevel === 'warning' ? '1.2s' : 'N/A'}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Right Column - Activity Graph */}
@@ -200,9 +188,7 @@ export function Dashboard() {
         </div>
 
         {/* Alerts Panel */}
-        <div>
-          <AlertsPanel riskLevel={riskLevel} />
-        </div>
+        <AlertsPanel riskLevel={riskLevel} />
       </div>
     </div>
   );
