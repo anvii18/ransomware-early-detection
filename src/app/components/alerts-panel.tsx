@@ -6,7 +6,7 @@ interface AlertsPanelProps {
 }
 
 export function AlertsPanel({ riskLevel }: AlertsPanelProps) {
-  const alerts = {
+  const alerts: Record<RiskLevel, { icon: any; title: string; description: string; severity: string; time: string }[]> = {
     normal: [
       {
         icon: Shield,
@@ -123,22 +123,6 @@ export function AlertsPanel({ riskLevel }: AlertsPanelProps) {
             </div>
           );
         })}
-      </div>
-
-      {/* Summary Cards */}
-      <div className="grid grid-cols-2 gap-4 mt-6">
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-sm text-slate-400 mb-1">Threats Blocked</div>
-          <div className="text-2xl font-semibold text-white">
-            {riskLevel === 'critical' ? '47' : riskLevel === 'warning' ? '2' : '0'}
-          </div>
-        </div>
-        <div className="bg-slate-900/50 border border-slate-800 rounded-lg p-4">
-          <div className="text-sm text-slate-400 mb-1">Response Time</div>
-          <div className="text-2xl font-semibold text-white">
-            {riskLevel === 'critical' ? '0.3s' : riskLevel === 'warning' ? '1.2s' : 'N/A'}
-          </div>
-        </div>
       </div>
     </div>
   );
