@@ -1,3 +1,6 @@
+import warnings
+warnings.filterwarnings("ignore")
+
 from flask import Flask
 from flask_cors import CORS
 from api.routes import api_bp
@@ -6,7 +9,7 @@ from honeypots.honeypot_manager import deploy_honeypots
 
 def create_app():
     app = Flask(__name__)
-    CORS(app)
+    CORS(app)  # allow frontend requests
     setup_logger()
     deploy_honeypots()
     app.register_blueprint(api_bp, url_prefix="/api")
