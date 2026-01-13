@@ -2,6 +2,7 @@ import os
 import time
 import random
 import string
+import requests
 from datetime import datetime
 
 BASE_DIR = os.path.dirname(_file_)  # simulation folder
@@ -55,3 +56,7 @@ if __name__ == "__main__":
         run()
     except KeyboardInterrupt:
         log("=== Simulator stopped by user ===")
+        
+requests.post("http://127.0.0.1:5000/update-risk", json={
+    "risk": "critical"
+})
