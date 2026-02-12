@@ -5,7 +5,7 @@ import string
 import requests
 from datetime import datetime
 
-BASE_DIR = os.path.dirname(_file_)  # simulation folder
+BASE_DIR = os.path.dirname(__file__)  # simulation folder
 TARGET_FOLDER = os.path.join(BASE_DIR, "demo_test_files")
 
 
