@@ -208,4 +208,8 @@ marimo/_lsp/
 __marimo__/
 =======
 node_modules/
+<<<<<<< HEAD
 >>>>>>> fb94545 (initial clean commit)
+=======
+ransomware_frontend/node_modules/
+>>>>>>> cab3378 (final commit before pull)
