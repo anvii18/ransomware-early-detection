@@ -2,6 +2,10 @@
 
 An educational ransomware-risk classification project with a React/Vite dashboard, a Python FastAPI endpoint, and a Random Forest model trained on example file-activity features.
 
+- **Live dashboard:** https://ransomware-early-detection-ui.onrender.com
+- **API health:** https://ransomware-early-detection-api.onrender.com/api/health
+- **Interactive API docs:** https://ransomware-early-detection-api.onrender.com/docs
+
 > **Important:** This is a student demo, not an endpoint security product. It does not monitor or block real file-system activity. The bundled CSV is a small example dataset, so model scores are not evidence of real-world detection performance.
 
 ## Project structure
@@ -80,24 +84,26 @@ Build the frontend:
 npm run build
 ```
 
-## 3. Deploy the full demo to Render
+## 3. Live demo and deployment
 
-The repository includes a Render Blueprint in `render.yaml` that describes both the Python API and static frontend. To deploy:
+The project is deployed on Render:
 
-1. Push the latest `main` branch to GitHub (this PR should be merged first).
-2. Sign in to Render and choose **New → Blueprint**.
-3. Connect `anvii18/ransomware-early-detection` and select the `main` branch.
-4. Review the two services from `render.yaml` and deploy them.
-5. After both services are live, open the API health URL:
-   `https://ransomware-early-detection-api.onrender.com/api/health`
-   It should return JSON with `"status": "ok"`.
-6. Open the frontend:
-   `https://ransomware-early-detection-ui.onrender.com`
-   Use **ML Prediction Playground** and submit sample features.
+- **Frontend dashboard:** https://ransomware-early-detection-ui.onrender.com
+- **API health check:** https://ransomware-early-detection-api.onrender.com/api/health
+- **Interactive API documentation:** https://ransomware-early-detection-api.onrender.com/docs
 
-The Blueprint configures the frontend API URL and the API's allowed frontend origin. If Render assigns different service names or URLs, update `VITE_API_URL` on the static site and `FRONTEND_ORIGINS` on the API to the actual URLs, then redeploy both services. Render's free services may sleep when idle; the first request after sleep can take a little time.
+Open the dashboard and use **ML Prediction Playground** to submit sample activity features. The health endpoint should return JSON containing `"status": "ok"` and `"model_ready": true`.
 
-This deployment is an educational demo. It classifies manually entered example features; it does not monitor a real device or isolate a host.
+To deploy or redeploy your own instance, the repository includes a Render Blueprint in `render.yaml`:
+
+1. Sign in to Render and choose **New → Blueprint**.
+2. Connect `anvii18/ransomware-early-detection` and select the `main` branch.
+3. Review the API and static-site services described by `render.yaml`, then apply the Blueprint.
+4. If Render assigns different service URLs, update `VITE_API_URL` on the static site and `FRONTEND_ORIGINS` on the API to match the actual URLs, then redeploy.
+
+Render free services may sleep when idle, so the first request after inactivity can take a little time.
+
+This is an educational demo. It classifies manually entered example features; it does not monitor a real device, isolate a host, or block file writes.
 
 ## 4. Tests
 
