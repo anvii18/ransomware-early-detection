@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: ransomware-early-detection-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r ransomware_ml/ransomware_ml1/requirements.txt && pip install -r backend/requirements.txt
+    startCommand: uvicorn backend.app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.11
+      - key: FRONTEND_ORIGINS
+        value: https://ransomware-early-detection-ui.onrender.com
+
+  - type: web
+    name: ransomware-early-detection-ui
+    runtime: static
+    plan: free
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://ransomware-early-detection-api.onrender.com
