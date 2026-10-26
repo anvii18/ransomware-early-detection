@@ -6,6 +6,7 @@ import { ActivityGraph } from './activity-graph';
 import { AlertsPanel } from './alerts-panel';
 import { AutomaticKillSwitch } from './automatic-kill-switch';
 import { Shield, CheckCircle } from 'lucide-react';
+import { PredictionPanel } from './prediction-panel';
 
 export function Dashboard() {
   const [riskLevel, setRiskLevel] = useState<RiskLevel>('normal');
@@ -169,6 +170,8 @@ export function Dashboard() {
             </button>
           </div>
         </div>
+
+        <PredictionPanel />
 
         {/* System Stats */}
         <div className="mb-8">
