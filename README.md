@@ -15,6 +15,7 @@ An educational ransomware-risk classification project with a React/Vite dashboar
 - `backend/app.py` — FastAPI health and prediction endpoints.
 - `ransomware_ml/ransomware_ml1/dataset.csv` — example tabular dataset.
 - `ransomware_ml/ransomware_ml1/modeltrain.py` — validates data, trains and evaluates the Random Forest model.
+- `ransomware_ml/ransomware_ml1/evaluate_model.py` — reproducible hold-out evaluation with dataset profile and JSON report option.
 - `ransomware_ml/ransomware_ml1/modeltest.py` — validates features and returns a risk assessment.
 - `tests/` — unit tests for prediction behavior.
 
@@ -61,6 +62,18 @@ Train and inspect model metrics manually:
 ```bash
 python ransomware_ml/ransomware_ml1/modeltrain.py
 ```
+
+Run the fixed-seed hold-out evaluation, including per-class precision/recall/F1, confusion matrix, dataset class counts, duplicate feature rows, and cross-split feature overlap:
+```bash
+python ransomware_ml/ransomware_ml1/evaluate_model.py
+```
+
+Optionally save the report as JSON:
+```bash
+python ransomware_ml/ransomware_ml1/evaluate_model.py --output evaluation_report.json
+```
+
+The evaluation script uses a stratified 80/20 split and a fixed random seed (42) to make the experiment repeatable. It does not claim external validation; the bundled dataset is synthetic/example data, so the metrics only describe this dataset and split. A high score on this data should not be interpreted as real-world ransomware detection accuracy.
 
 ## 2. Run the frontend
 
@@ -123,7 +136,7 @@ GitHub Actions runs the Python tests, a model-training smoke test, and the front
 | `honeypot` | Whether a honeypot interaction was observed (0/1) |
 | `label` | Target class: 0 = safe, 1 = ransomware-like activity |
 
-The model uses a stratified train/test split and reports accuracy, per-class precision/recall/F1, and a confusion matrix. Since the dataset is small and may contain patterns directly correlated with labels, these metrics are for demonstration only. A credible evaluation requires larger independent data, leakage checks, and external validation.
+The model uses a stratified train/test split and reports accuracy, per-class precision/recall/F1, and a confusion matrix. Since the dataset is small and synthetic/example data may contain patterns directly correlated with labels, these metrics are for demonstration only. A credible evaluation requires larger independent data, leakage checks, and external validation.
 
 ## Responsible use
 
