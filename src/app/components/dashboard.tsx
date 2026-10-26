@@ -63,6 +63,18 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
       <div className="max-w-7xl mx-auto px-6 py-8">
+        <div
+          role="note"
+          className="mb-6 rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-100"
+        >
+          <p className="font-semibold">Educational simulation — not live device protection</p>
+          <p className="mt-1 text-amber-100/80">
+            Dashboard stats, alerts, device readings, and the visual kill-switch sequence are simulated.
+            They do not come from your computer and do not isolate a device or block file changes.
+            Use the ML Prediction Playground to send sample features to the demo model.
+          </p>
+        </div>
+
         {/* Header Section */}
         <div className={`bg-gradient-to-br ${getHeaderGradient()} rounded-lg p-8 mb-8 border border-slate-800`}>
           <div className="flex items-start justify-between">
@@ -74,7 +86,7 @@ export function Dashboard() {
                 </h1>
               </div>
               <p className="text-slate-400 mb-4">
-                Easily protect your device from ransomware threats
+                Interactive ransomware-risk detection simulation
               </p>
               <RiskStateIndicator level={riskLevel} />
               
@@ -100,7 +112,7 @@ export function Dashboard() {
                 {new Date().toLocaleTimeString()}
               </div>
               <div className="text-xs text-slate-500">
-                System Status: Active
+                Simulation: Running
               </div>
             </div>
           </div>
