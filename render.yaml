@@ -15,9 +15,12 @@ services:
   - type: web
     name: ransomware-early-detection-ui
     runtime: static
-    plan: free
     buildCommand: npm install && npm run build
     staticPublishPath: ./dist
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
     envVars:
       - key: VITE_API_URL
         value: https://ransomware-early-detection-api.onrender.com
